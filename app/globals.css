@@ -1,26 +1,76 @@
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #3aaeab;
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='80' height='80' fill='%233aaeab'/%3E%3Cg opacity='0.15' fill='%23ffffff' font-family='Arial, sans-serif' font-size='16'%3E%3Ctext x='8' y='18'%3E1%3C/text%3E%3Ctext x='28' y='18'%3E2%3C/text%3E%3Ctext x='48' y='18'%3E3%3C/text%3E%3Ctext x='68' y='18'%3E4%3C/text%3E%3Ctext x='8' y='38'%3E5%3C/text%3E%3Ctext x='28' y='38'%3E6%3C/text%3E%3Ctext x='48' y='38'%3E7%3C/text%3E%3Ctext x='68' y='38'%3E8%3C/text%3E%3Ctext x='8' y='58'%3E9%3C/text%3E%3Ctext x='28' y='58'%3E1%3C/text%3E%3Ctext x='48' y='58'%3E2%3C/text%3E%3Ctext x='68' y='58'%3E3%3C/text%3E%3Ctext x='8' y='78'%3E4%3C/text%3E%3Ctext x='28' y='78'%3E5%3C/text%3E%3Ctext x='48' y='78'%3E6%3C/text%3E%3Ctext x='68' y='78'%3E7%3C/text%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+  font-family: Arial, sans-serif;
+  color: white;
+  min-height: 100vh;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+ul li {
+  padding: 5px 0;
+  padding-left: 25px;
+  position: relative;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+ul li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #4caf50;
+  font-weight: bold;
+}
+
+/* Responsive para móvil */
+@media (max-width: 800px) {
+  /* Cambiar orden: controles arriba, grid abajo */
+  main > div > div:nth-child(3) {
+    flex-direction: column-reverse !important;
+  }
+
+  /* Controles ocupan todo el ancho */
+  main > div > div:nth-child(3) > div:last-child {
+    width: 100%;
+    max-width: 100%;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (max-width: 600px) {
+  /* Hacer grid más pequeño en móviles */
+  body {
+    padding: 10px;
+  }
+}
+
+/* Responsive Sudoku Grid */
+@media (max-width: 600px) {
+  /* Celdas más pequeñas en móvil */
+  div[style*="width: clamp"] {
+    width: 35px !important;
+    height: 35px !important;
+    font-size: 1.2rem !important;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 800px) {
+  /* Celdas medianas en tablets */
+  div[style*="width: clamp"] {
+    width: 42px !important;
+    height: 42px !important;
+    font-size: 1.3rem !important;
+  }
+}
+
+@media (min-width: 801px) {
+  /* Celdas grandes en desktop */
+  div[style*="width: clamp"] {
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 1.5rem !important;
+  }
 }
