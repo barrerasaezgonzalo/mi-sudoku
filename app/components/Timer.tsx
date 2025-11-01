@@ -83,6 +83,7 @@ const styles = {
     display: "flex",
     alignItems: "center",
     gap: "0.5rem",
+    minWidth: "220px",
   },
   icon: {
     fontSize: "1.5rem",

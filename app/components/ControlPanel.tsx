@@ -123,8 +123,9 @@ const styles = {
     marginTop: "15px",
   },
   numberPad: {
-    display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
+    display: "flex",
+    flexWrap: "wrap" as const,
+    // gridTemplateColumns: "repeat(3, 1fr)",
     gap: "8px",
     marginBottom: "20px",
   },
@@ -135,8 +136,8 @@ const styles = {
     fontSize: "1.5rem",
     fontWeight: "bold",
     cursor: "pointer",
-    background: "rgba(255, 255, 255, 0.2)",
-    color: "white",
+    // background: "rgba(255, 255, 255, 0.2)",
+    color: "black",
     transition: "all 0.2s",
   },
   actionButtons: {
@@ -181,8 +182,8 @@ const styles = {
     fontWeight: "bold",
     cursor: "pointer",
     transition: "all 0.3s",
-    background: "rgba(255, 255, 255, 0.2)",
-    color: "white",
+    //background: "rgba(255, 255, 255, 0.2)",
+    color: "black",
   },
   difficultyBtnActive: {
     background: "#4CAF50",

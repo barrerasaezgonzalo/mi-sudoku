@@ -81,7 +81,7 @@ const styles = {
     fontWeight: "bold",
     cursor: "pointer",
     background: "white",
-    color: "#333",
+    color: "#2196F3",
     transition: "all 0.2s",
     userSelect: "none" as const,
   },

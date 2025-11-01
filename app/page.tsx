@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import SudokuGrid from "./components/SudokuGrid";
 import ControlPanel from "./components/ControlPanel";
 import Timer from "./components/Timer";
-import StatsPanel from "./components/StatsPanel";
+import Image from "next/image";
+// import StatsPanel from "./components/StatsPanel";
 import { Grid, Difficulty } from "./types";
 import {
   getPuzzle,
@@ -13,6 +14,7 @@ import {
   countEmptyCells,
   getHint,
 } from "./utils/sudoku";
+import Link from "next/link";
 
 export default function Home() {
   const [grid, setGrid] = useState<Grid>([]);
@@ -24,6 +26,72 @@ export default function Home() {
   const [errors, setErrors] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const [completed, setCompleted] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const styles = {
+    container: {
+      maxWidth: "1200px",
+      width: "100%",
+      margin: "0 auto",
+      padding: "20px",
+    },
+    header: {
+      textAlign: "center" as const,
+      marginBottom: "30px",
+    },
+    title: {
+      fontSize: "clamp(2rem, 5vw, 3rem)", // Responsive
+      marginBottom: "10px",
+      //textShadow: "2px 2px 4px rgba(0,0,0,0.3)",
+    },
+    subtitle: {
+      fontSize: "clamp(0.9rem, 2vw, 1.1rem)", // Responsive
+      opacity: 0.9,
+    },
+    gameArea: {
+      display: "flex",
+      gap: "2rem",
+      justifyContent: "center",
+      flexWrap: "wrap" as const,
+      marginBottom: "30px",
+      flexDirection: isMobile ? "column" : ("row" as const), // Desktop: lado a lado
+    },
+    footer: {
+      textAlign: "center" as const,
+      padding: "2rem",
+      opacity: 0.7,
+      fontSize: "0.875rem",
+      marginTop: "auto",
+    },
+    instructions: {
+      background: "rgba(255, 255, 255, 0.15)",
+      backdropFilter: "blur(10px)",
+      padding: "20px",
+      borderRadius: "12px",
+      maxWidth: "600px",
+      margin: "20px auto 0",
+      textAlign: "left" as const,
+    },
+    instructionsTitle: {
+      fontSize: "1.2rem",
+      marginBottom: "10px",
+      textAlign: "center" as const,
+    },
+    instructionsList: {
+      listStyle: "none",
+      padding: "0",
+      margin: "0",
+      fontSize: "0.95rem",
+      lineHeight: "1.8",
+    },
+  } as const;
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 820);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Inicializar juego
   useEffect(() => {
@@ -127,12 +195,25 @@ export default function Home() {
   };
 
   const emptyCells = grid.length > 0 ? countEmptyCells(grid) : 0;
-  const filledCells = 81 - emptyCells;
+  // const filledCells = 81 - emptyCells;
 
   return (
     <div style={styles.container}>
       <header style={styles.header}>
-        <h1 style={styles.title}>🎯 SUDOKU</h1>
+        <h1 style={styles.title}>
+          <Image
+            src={"/sudoku.png"}
+            alt={"Sudoku"}
+            width={100}
+            height={100}
+            style={{
+              verticalAlign: "middle",
+              marginRight: "2rem",
+              marginBottom: "2rem",
+            }}
+          />
+          SUDOKU
+        </h1>
         <p style={styles.subtitle}>
           Completa el tablero con números del 1 al 9
         </p>
@@ -181,71 +262,30 @@ export default function Home() {
         />
       </div>
 
-      <StatsPanel
+      {/* <StatsPanel
         completed={completed}
         emptyCells={emptyCells}
         filledCells={filledCells}
-      />
+      /> */}
 
-      <footer style={styles.footer}>Hecho en noches de desvelo ☕🌙</footer>
+      <footer style={styles.footer}>
+        <p>Creado a las 3 AM cuando el café ya no hacía efecto ☕💻</p>
+
+        <Link href="https://chilehub.cl">
+          <Image
+            src="/chilehub.png"
+            alt="Logo de Sopa de Letras"
+            width={200}
+            height={80}
+            style={{
+              width: "200px",
+              height: "80px",
+              objectFit: "contain",
+              marginTop: "1rem",
+            }}
+          />
+        </Link>
+      </footer>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    maxWidth: "1200px",
-    width: "100%",
-    margin: "0 auto",
-    padding: "20px",
-  },
-  header: {
-    textAlign: "center" as const,
-    marginBottom: "30px",
-  },
-  title: {
-    fontSize: "clamp(2rem, 5vw, 3rem)", // Responsive
-    marginBottom: "10px",
-    textShadow: "2px 2px 4px rgba(0,0,0,0.3)",
-  },
-  subtitle: {
-    fontSize: "clamp(0.9rem, 2vw, 1.1rem)", // Responsive
-    opacity: 0.9,
-  },
-  gameArea: {
-    display: "flex",
-    gap: "2rem",
-    justifyContent: "center",
-    flexWrap: "wrap" as const,
-    marginBottom: "30px",
-    flexDirection: "row" as const, // Desktop: lado a lado
-  },
-  footer: {
-    textAlign: "center" as const,
-    padding: "2rem",
-    opacity: 0.7,
-    fontSize: "0.875rem",
-    marginTop: "auto",
-  },
-  instructions: {
-    background: "rgba(255, 255, 255, 0.15)",
-    backdropFilter: "blur(10px)",
-    padding: "20px",
-    borderRadius: "12px",
-    maxWidth: "600px",
-    margin: "20px auto 0",
-    textAlign: "left" as const,
-  },
-  instructionsTitle: {
-    fontSize: "1.2rem",
-    marginBottom: "10px",
-    textAlign: "center" as const,
-  },
-  instructionsList: {
-    listStyle: "none",
-    padding: "0",
-    margin: "0",
-    fontSize: "0.95rem",
-    lineHeight: "1.8",
-  },
-};
